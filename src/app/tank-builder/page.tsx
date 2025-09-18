@@ -78,7 +78,7 @@ export default function TankBuilderPage() {
             <p className="text-gray-600 text-left">
               Check compatibility of your current fish and see what species you can safely add
             </p>
-          </div>
+          </button>
         </div>
       </div>
 

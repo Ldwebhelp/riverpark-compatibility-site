@@ -22,8 +22,8 @@ A comprehensive freshwater aquarium species compatibility web application that h
 ### User Experience
 - **Responsive Design**: Mobile-first approach with Tailwind CSS v3.4.17
 - **Accessibility Features**: WCAG 2.1 compliant with screen reader support
-- **Interactive Elements**: Swiper.js carousels for enhanced user engagement
-- **Multiple Layout Options**: Grid views, carousels, and responsive containers
+- **Interactive Elements**: Responsive grid layouts for enhanced user engagement
+- **Multiple Layout Options**: Grid views and responsive containers
 
 ## Technology Stack
 
@@ -43,7 +43,6 @@ src/
 ├── components/             # Reusable UI components
 │   ├── AccessibilityFeatures.tsx
 │   ├── ResponsiveGrid.tsx
-│   ├── SwiperCarousel.tsx
 │   ├── StealthAssistant.tsx
 │   └── TankSetupAnalyser.tsx
 ├── data/                   # Species database and compatibility matrix

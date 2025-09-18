@@ -350,9 +350,17 @@ export class ProductRecommendationEngine {
       optional: ProductRecommendation[]
     },
     budget: number
-  ) {
+  ): {
+    essential: ProductRecommendation[]
+    recommended: ProductRecommendation[]
+    optional: ProductRecommendation[]
+  } {
     let remaining = budget
-    const result = { essential: [], recommended: [], optional: [] }
+    const result: {
+      essential: ProductRecommendation[]
+      recommended: ProductRecommendation[]
+      optional: ProductRecommendation[]
+    } = { essential: [], recommended: [], optional: [] }
 
     // Essential items first
     for (const rec of recommendations.essential) {

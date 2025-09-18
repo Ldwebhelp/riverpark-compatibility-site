@@ -259,7 +259,11 @@ export class IntelligenceEngine {
     priority: 'essential' | 'recommended' | 'optional'
     reason: string
   }> {
-    const categories = [
+    const categories: Array<{
+      category: ProductCategory
+      priority: 'essential' | 'recommended' | 'optional'
+      reason: string
+    }> = [
       {
         category: 'tanks' as ProductCategory,
         priority: 'essential' as const,
@@ -293,7 +297,7 @@ export class IntelligenceEngine {
     if (needsSpecialSubstrate) {
       categories.push({
         category: 'substrate',
-        priority: 'recommended',
+        priority: 'recommended' as const,
         reason: 'Cichlids prefer specific substrate types'
       })
     }
@@ -429,7 +433,7 @@ export class IntelligenceEngine {
     const kitName = `${primarySpecies.name} Care Kit`
     
     // Select relevant products for the care kit
-    const kitItems = []
+    const kitItems: Product[] = []
     const essentialCategories = ['food', 'water-care', 'test-kits']
     
     essentialCategories.forEach(category => {

@@ -36,7 +36,7 @@ export default function TankMateRecommendations({
   const getRecommendationScore = (speciesId: string): number => {
     if (selectedSpecies.length === 0) return 0
     
-    const ratings = selectedSpecies.map(selectedId => {
+    const ratings: number[] = selectedSpecies.map(selectedId => {
       const check = CompatibilityEngine.checkPairCompatibility(selectedId, speciesId)
       switch (check.rating) {
         case 'Y': return 1
@@ -46,7 +46,8 @@ export default function TankMateRecommendations({
       }
     })
 
-    return Math.round((ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length) * 100)
+    const total = ratings.reduce((sum, rating) => sum + rating, 0)
+    return Math.round((total / ratings.length) * 100)
   }
 
   if (selectedSpecies.length === 0) {
