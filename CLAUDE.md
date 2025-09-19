@@ -1,99 +1,95 @@
-# CLAUDE.md
+# Claude Code Session Progress
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Project: Riverpark Aquarium Compatibility Guide
 
-## Project Overview
+### Current Status: ~30% Complete (Foundation Built, Content & Functionality Needed)
 
-Riverpark Compatibility Site is a comprehensive freshwater aquarium species compatibility web application built with Next.js, TypeScript, and Tailwind CSS. It features a compatibility checker, species database, tank recommendations, and BigCommerce Catalyst integration.
+## ✅ Completed Foundation Work:
+- **Project Structure**: Next.js 14.2.15 with TypeScript and App Router
+- **Build System**: Proper TypeScript compilation, zero errors
+- **Component Architecture**: Responsive components with accessibility features
+- **Deployment**: GitHub repository + Vercel production deployment
+- **BigCommerce Integration**: API framework with live credentials configured
+- **Version Control**: Clean Git history with proper commit messages
+- **Styling**: Tailwind CSS v3.4.17 with Open Sans font
+- **Accessibility**: WCAG 2.1 compliant features and screen reader support
 
-## Commands
+## 🔄 Critical Missing Work (70% remaining):
 
-```bash
-# Development
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript type checking
+### Database & Content
+- [ ] Complete species database - add remaining 29+ species with full compatibility data
+- [ ] Fill out complete compatibility matrix for all species pairs  
+- [ ] Add detailed species information (care requirements, tank params, etc.)
+- [ ] Implement species images/photos instead of emoji placeholders
 
-# Install dependencies
-npm install
-```
-
-## Project Structure
-
-```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # React components (<200 lines each)
-├── data/               # Species data and compatibility matrix
-├── lib/                # Utility functions and algorithms
-└── types/              # TypeScript type definitions
-```
-
-## Key Files
-
-- `src/data/species.ts` - Species database and compatibility matrix from chart
-- `src/lib/compatibility.ts` - Core compatibility checking algorithms
-- `src/types/species.ts` - TypeScript definitions for all data types
-- `PROGRESS.md` - Current development status and todo tracking
-
-## Architecture
-
-### Species Compatibility System
-- 31 species with Y/N/C compatibility ratings from chart
-- Real-time compatibility checking between multiple species
-- Tank scoring algorithm (0-100% compatibility)
-- Conflict detection and caution warnings
-
-### Component Design
-- Small, focused components under 200 lines
-- Semantic HTML structure for accessibility
-- Tailwind v3.4.17 utility classes only
-- Open Sans font throughout
-- Responsive mobile-first design
-
-### Data Flow
-```
-Species Selection → Compatibility Engine → Real-time Results
-User Input → Filters → Filtered Species → UI Update
-```
-
-## Development Guidelines
-
-### Component Standards
-- Maximum 200 lines per component
-- Use semantic HTML elements
-- Implement proper ARIA labels
-- Support keyboard navigation
-- Use Tailwind utility classes only
-
-### Compatibility Algorithm
-- Use `CompatibilityEngine` class for all compatibility checks
-- Always check both directions of compatibility pairs
-- Provide clear reasoning for compatibility ratings
-- Calculate tank-wide compatibility scores
-
-### Color Scheme
-- Primary: Aqua (#06a9db) - main actions, selections
-- Secondary: Coral (#ff5722) - warnings, highlights  
-- Success: Green - compatible species
-- Warning: Yellow - caution required
-- Error: Red - incompatible species
+### Core Functionality  
+- [ ] Create functional species selector component with search and filtering
+- [ ] Build working compatibility checker that shows actual results
+- [ ] Implement functional tank mate recommendations engine
+- [ ] Create working tank setup analyzer with bioload calculations
 
 ### BigCommerce Integration
-- Follow Catalyst patterns and conventions
-- Use existing Catalyst components when available
-- Maintain GraphQL consistency
-- Optimize for performance
+- [ ] Add real BigCommerce product data and categories
+- [ ] Test and validate BigCommerce API endpoints and integration
+- [ ] Implement product recommendation system with real product matching
 
-## Current Status
+### User Experience
+- [ ] Build functional stealth assistant with contextual suggestions
+- [ ] Add proper error handling and loading states throughout app
+- [ ] Create functional navigation between all pages
+- [ ] Add user feedback and validation for form inputs
 
-The foundation is complete with species selection, compatibility checking, and core UI components. See `PROGRESS.md` for detailed status and next steps.
+### Production Readiness
+- [ ] Implement responsive design testing across devices
+- [ ] Add content management for species descriptions and care guides
+- [ ] Create help documentation and user guides
+- [ ] Test end-to-end user workflows and fix bugs
+- [ ] Performance optimization and production readiness
 
-## Notes
+## Technical Architecture
 
-- Species data extracted from freshwater compatibility chart image
-- All components designed for accessibility and responsive design
-- Stealth mode guided assistant architecture planned for Phase 4
-- Product recommendations will integrate with BigCommerce Catalyst backend
+### Current File Structure:
+```
+src/
+├── app/                    # Next.js App Router pages
+├── components/             # UI components (foundation built)
+│   ├── AccessibilityFeatures.tsx
+│   ├── ResponsiveGrid.tsx
+│   ├── StealthAssistant.tsx
+│   └── TankSetupAnalyser.tsx
+├── data/                   # Species database (incomplete)
+│   └── species.ts          # Only 2 of 31+ species
+├── lib/                    # Core business logic (framework ready)
+│   ├── bigcommerce.ts      # API integration setup
+│   └── intelligenceEngine.ts # Compatibility algorithms
+└── types/                  # TypeScript definitions
+    └── species.ts
+```
+
+### Environment Configuration:
+- BigCommerce Store Hash: `nzocnvfw4r`
+- Storefront API configured with valid tokens
+- Production deployment: https://riverpark-compatibility-site-mwvvo2i4r.vercel.app
+
+## Key Issues Identified:
+1. **Species Database**: Only 2 species implemented, need 29+ more with complete compatibility matrix
+2. **No Real Product Data**: BigCommerce framework exists but no actual products configured
+3. **Non-functional Components**: UI components built but missing data connections
+4. **Missing Content**: No species images, incomplete descriptions, placeholder content
+
+## Next Priority Tasks:
+1. Complete species database with all freshwater fish data
+2. Implement functional compatibility checker interface
+3. Add real BigCommerce product catalog
+4. Build working tank setup analyzer
+5. Test end-to-end user workflows
+
+## Deployment Status:
+- ✅ GitHub: https://github.com/Ldwebhelp/riverpark-compatibility-site
+- ✅ Vercel Production: Live but not functional for end users
+- ✅ Environment Variables: Configured and encrypted
+- ❌ User-Ready: Needs substantial content and functionality work
+
+---
+*Last Updated: $(date '+%Y-%m-%d %H:%M:%S')*
+*Project requires significant development to be user-ready*
