@@ -222,7 +222,7 @@ export default function ProductDetail({ product, onAddToCart }: ProductDetailPro
         </div>
 
         {/* Right Column - Sticky Product Info */}
-        <div className="lg:sticky lg:top-8 lg:h-fit">
+        <div className="lg:sticky lg:top-8 lg:self-start">
           <div className="bg-white border border-secondary-200 rounded-2xl p-8 shadow-soft">
             {/* Product Name & Brand */}
             <div className="mb-6">
@@ -334,33 +334,6 @@ export default function ProductDetail({ product, onAddToCart }: ProductDetailPro
               </Button>
             </div>
 
-            {/* Product Details */}
-            <div className="border-t border-secondary-200 pt-6 space-y-4">
-              <h3 className="font-semibold text-secondary-900 mb-4">Product Details</h3>
-
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-secondary-600">Product ID:</span>
-                  <span className="text-secondary-900 font-medium">{product.id}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-secondary-600">Category:</span>
-                  <span className="text-secondary-900 font-medium">{product.category}</span>
-                </div>
-                {product.metadata?.care_level && (
-                  <div className="flex justify-between">
-                    <span className="text-secondary-600">Care Level:</span>
-                    <span className="text-secondary-900 font-medium capitalize">{product.metadata.care_level}</span>
-                  </div>
-                )}
-                {product.metadata?.temp_range && (
-                  <div className="flex justify-between">
-                    <span className="text-secondary-600">Temperature:</span>
-                    <span className="text-secondary-900 font-medium">{product.metadata.temp_range}°F</span>
-                  </div>
-                )}
-              </div>
-            </div>
 
             {/* Social Sharing */}
             <div className="border-t border-secondary-200 pt-6 mt-6">
