@@ -75,14 +75,16 @@ export default function FilterSidebar({
   }
 
   const resetFilters = () => {
-    setTempFilters({
+    const defaultFilters: FilterOptions = {
       categories: [],
-      priceRange: [0, 500],
+      priceRange: [0, 500] as [number, number],
       careLevel: [],
       tempRange: [],
       compatibility: [],
       inStock: false
-    })
+    }
+    setTempFilters(defaultFilters)
+    onClearFilters()
   }
 
   const hasActiveFilters =
@@ -111,10 +113,10 @@ export default function FilterSidebar({
       </SidebarHeader>
 
       <SidebarBody>
-        <div className="space-y-8">
+        <form className="space-y-8" role="search" aria-label="Product filters">
           {/* Categories */}
-          <div>
-            <h3 className="font-semibold text-secondary-900 mb-4">Categories</h3>
+          <fieldset>
+            <legend className="font-semibold text-secondary-900 mb-4">Categories</legend>
             <div className="space-y-2">
               {categories.map((category) => (
                 <label
@@ -131,11 +133,11 @@ export default function FilterSidebar({
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           {/* Price Range */}
-          <div>
-            <h3 className="font-semibold text-secondary-900 mb-4">Price Range</h3>
+          <fieldset>
+            <legend className="font-semibold text-secondary-900 mb-4">Price Range</legend>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="flex-1">
@@ -172,11 +174,11 @@ export default function FilterSidebar({
                 />
               </div>
             </div>
-          </div>
+          </fieldset>
 
           {/* Care Level */}
-          <div>
-            <h3 className="font-semibold text-secondary-900 mb-4">Care Level</h3>
+          <fieldset>
+            <legend className="font-semibold text-secondary-900 mb-4">Care Level</legend>
             <div className="flex flex-wrap gap-2">
               {careLevels.map((level) => (
                 <button
@@ -192,11 +194,11 @@ export default function FilterSidebar({
                 </button>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           {/* Temperature Range */}
-          <div>
-            <h3 className="font-semibold text-secondary-900 mb-4">Temperature Range</h3>
+          <fieldset>
+            <legend className="font-semibold text-secondary-900 mb-4">Temperature Range</legend>
             <div className="grid grid-cols-2 gap-2">
               {tempRanges.map((range) => (
                 <button
@@ -212,10 +214,10 @@ export default function FilterSidebar({
                 </button>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           {/* In Stock Only */}
-          <div>
+          <fieldset>
             <label className="flex items-center gap-3 p-3 rounded-lg border border-secondary-200 hover:bg-secondary-50 cursor-pointer transition-colors">
               <input
                 type="checkbox"
@@ -228,8 +230,8 @@ export default function FilterSidebar({
                 <p className="text-sm text-secondary-600">Show only available products</p>
               </div>
             </label>
-          </div>
-        </div>
+          </fieldset>
+        </form>
       </SidebarBody>
 
       <SidebarFooter>

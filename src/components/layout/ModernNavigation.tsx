@@ -33,8 +33,16 @@ export default function ModernNavigation({
   }
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-secondary-200 shadow-soft">
-      <div className="container mx-auto px-4">
+    <header
+      className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-secondary-200 shadow-soft"
+      role="banner"
+      aria-label="Site header"
+    >
+      <nav
+        className="container mx-auto px-4"
+        role="navigation"
+        aria-label="Main navigation"
+      >
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
@@ -185,7 +193,7 @@ export default function ModernNavigation({
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </header>
   )
 }

@@ -90,6 +90,7 @@ export default function Sidebar({
         `}
         role="complementary"
         aria-hidden={!isOpen}
+        aria-label={side === 'left' ? 'Filter options' : 'Shopping cart'}
       >
         {children}
       </aside>

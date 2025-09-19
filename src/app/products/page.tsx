@@ -113,25 +113,32 @@ export default function ProductsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="text-center">
+      {/* Page Header */}
+      <header className="text-center">
         <h1 className="text-4xl font-bold text-secondary-900 mb-4">
           Aquarium Products
         </h1>
         <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
           Professional-grade equipment and supplies for your freshwater aquarium
         </p>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sampleProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onViewDetails={handleProductSelect}
-          />
-        ))}
-      </div>
+      {/* Products Grid */}
+      <section aria-labelledby="products-grid" className="py-8">
+        <h2 id="products-grid" className="sr-only">Product catalog</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sampleProducts.map((product) => (
+            <article key={product.id}>
+              <ProductCard
+                product={product}
+                onViewDetails={handleProductSelect}
+              />
+            </article>
+          ))}
+        </div>
+      </section>
 
+      {/* Product Details Modal */}
       <ProductModal
         product={selectedProduct}
         isOpen={isModalOpen}

@@ -66,9 +66,13 @@ export default function Home() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <section className="text-center py-12">
+      <section
+        className="text-center py-12"
+        aria-labelledby="hero-heading"
+        role="banner"
+      >
         <div className="relative">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+          <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-primary-600 via-water-600 to-plant-600 bg-clip-text text-transparent">
               Riverpark Aquarium
             </span>
@@ -90,78 +94,87 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <aside className="flex flex-wrap justify-center gap-6" aria-label="Site statistics">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl mb-1">{stat.icon}</div>
+                <div className="text-2xl mb-1" aria-hidden="true">{stat.icon}</div>
                 <div className="text-2xl font-bold text-secondary-900">{stat.value}</div>
                 <div className="text-sm text-secondary-600">{stat.label}</div>
               </div>
             ))}
-          </div>
+          </aside>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section>
-        <div className="text-center mb-12">
+      {/* Features Section */}
+      <section
+        className="py-12"
+        aria-labelledby="features-heading"
+      >
+        <header className="text-center mb-12">
           <Badge variant="primary" size="lg" className="mb-4">
             Smart Aquarium Planning
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
+          <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
             Everything You Need for Perfect Aquarium Setup
           </h2>
           <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
             From species compatibility to equipment recommendations, our intelligent platform guides you every step of the way.
           </p>
-        </div>
+        </header>
 
         <div className="grid md:grid-cols-2 gap-8">
           {features.map((feature, index) => (
-            <Link key={index} href={feature.href} className="group">
-              <Card
-                variant="elevated"
-                hover
-                className="h-full p-8 group-hover:shadow-glow transition-all duration-300"
-              >
-                <div className="flex items-start gap-6">
-                  <div className={`
-                    w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient}
-                    flex items-center justify-center text-white text-2xl
-                    shadow-lg group-hover:scale-110 transition-transform duration-300
-                  `}>
-                    {feature.icon}
+            <article key={index} className="group">
+              <Link href={feature.href}>
+                <Card
+                  variant="elevated"
+                  hover
+                  className="h-full p-8 group-hover:shadow-glow transition-all duration-300"
+                >
+                  <div className="flex items-start gap-6">
+                    <div className={`
+                      w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient}
+                      flex items-center justify-center text-white text-2xl
+                      shadow-lg group-hover:scale-110 transition-transform duration-300
+                    `} aria-hidden="true">
+                      {feature.icon}
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-secondary-600 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors">
-                      {feature.title}
-                    </h3>
-                    <p className="text-secondary-600 leading-relaxed">
-                      {feature.description}
-                    </p>
+                  <div className="mt-6 flex items-center text-primary-600 font-medium group-hover:gap-3 transition-all">
+                    <span>Explore</span>
+                    <svg
+                      className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </div>
-                </div>
-
-                <div className="mt-6 flex items-center text-primary-600 font-medium group-hover:gap-3 transition-all">
-                  <span>Explore</span>
-                  <svg
-                    className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </Card>
-            </Link>
+                </Card>
+              </Link>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Smart Recommendations Preview */}
-      <section>
+      {/* Recommendations Section */}
+      <section
+        className="py-12"
+        aria-labelledby="recommendations-heading"
+      >
         <SmartRecommendationEngine
           products={sampleProducts}
           species={sampleSpecies}
@@ -169,10 +182,13 @@ export default function Home() {
         />
       </section>
 
-      {/* Call to Action */}
-      <section className="text-center py-12">
+      {/* Call to Action Section */}
+      <section
+        className="text-center py-12"
+        aria-labelledby="cta-heading"
+      >
         <Card variant="glass" className="max-w-4xl mx-auto p-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
+          <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
             Ready to Create Your Perfect Aquarium?
           </h2>
           <p className="text-lg text-secondary-600 mb-8 max-w-2xl mx-auto">
