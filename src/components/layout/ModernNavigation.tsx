@@ -21,11 +21,11 @@ export default function ModernNavigation({
   const pathname = usePathname()
 
   const navItems = [
-    { href: '/', label: 'Home', icon: '🏠' },
-    { href: '/products', label: 'Products', icon: '🛍️' },
-    { href: '/species', label: 'Species', icon: '🐠' },
-    { href: '/compatibility', label: 'Compatibility', icon: '🔄' },
-    { href: '/tank-builder', label: 'Tank Builder', icon: '🏗️' }
+    { href: '/', label: 'Home' },
+    { href: '/products', label: 'Products' },
+    { href: '/species', label: 'Species' },
+    { href: '/compatibility', label: 'Compatibility' },
+    { href: '/tank-builder', label: 'Tank Builder' }
   ]
 
   const isActive = (href: string) => {
@@ -62,15 +62,14 @@ export default function ModernNavigation({
                 key={item.href}
                 href={item.href}
                 className={`
-                  flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                  px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
                   ${isActive(item.href)
                     ? 'bg-primary-100 text-primary-700 shadow-sm'
                     : 'text-secondary-600 hover:text-primary-600 hover:bg-primary-50'
                   }
                 `}
               >
-                <span>{item.icon}</span>
-                <span>{item.label}</span>
+                {item.label}
               </Link>
             ))}
           </div>
@@ -158,15 +157,14 @@ export default function ModernNavigation({
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`
-                    flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
+                    px-4 py-3 rounded-lg text-sm font-medium transition-all
                     ${isActive(item.href)
                       ? 'bg-primary-100 text-primary-700'
                       : 'text-secondary-600 hover:text-primary-600 hover:bg-primary-50'
                     }
                   `}
                 >
-                  <span className="text-lg">{item.icon}</span>
-                  <span>{item.label}</span>
+                  {item.label}
                 </Link>
               ))}
 
