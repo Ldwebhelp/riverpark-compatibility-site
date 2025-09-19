@@ -1,17 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import ProductCard from '@/components/products/ProductCard'
-import ProductModal from '@/components/products/ProductModal'
 import { Product } from '@/types/species'
 
 export default function ProductsPage() {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const router = useRouter()
 
   const handleProductSelect = (product: Product) => {
-    setSelectedProduct(product)
-    setIsModalOpen(true)
+    router.push(`/products/${product.id}`)
   }
 
   // Sample products with different stock levels
@@ -138,15 +135,6 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Product Details Modal */}
-      <ProductModal
-        product={selectedProduct}
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false)
-          setSelectedProduct(null)
-        }}
-      />
     </div>
   )
 }

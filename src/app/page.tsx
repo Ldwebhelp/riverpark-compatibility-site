@@ -1,21 +1,18 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
-import ProductModal from '@/components/products/ProductModal'
 import SmartRecommendationEngine from '@/components/recommendations/SmartRecommendationEngine'
 import { Product, Species } from '@/types/species'
 
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [isProductModalOpen, setIsProductModalOpen] = useState(false)
+  const router = useRouter()
 
   const handleProductSelect = (product: Product) => {
-    setSelectedProduct(product)
-    setIsProductModalOpen(true)
+    router.push(`/products/${product.id}`)
   }
 
   const sampleProducts: Product[] = []
@@ -206,15 +203,6 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* Product Modal */}
-      <ProductModal
-        product={selectedProduct}
-        isOpen={isProductModalOpen}
-        onClose={() => {
-          setIsProductModalOpen(false)
-          setSelectedProduct(null)
-        }}
-      />
     </div>
   )
 }
