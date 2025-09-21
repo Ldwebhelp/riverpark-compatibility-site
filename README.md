@@ -5,21 +5,25 @@ A comprehensive freshwater aquarium species compatibility web application that h
 ## Features
 
 ### Core Compatibility System
+
 - **Species Compatibility Checker**: Based on comprehensive compatibility matrix covering 31+ freshwater species
 - **Tank Mate Recommendations**: AI-powered suggestions for compatible species combinations
 - **Current Tank Setup Analyzer**: Evaluate existing tank compatibility and potential issues
 
 ### Intelligent Assistant
+
 - **Stealth Mode Guided Assistant**: Non-intrusive contextual suggestions without decision trees
 - **AI-Powered Quick Reference**: 10 key facts for each species generated intelligently
 - **Product Recommendation Engine**: Smart suggestions for equipment and supplies
 
 ### BigCommerce Integration
+
 - **Complete E-commerce Integration**: Connected to BigCommerce Catalyst backend
 - **Product Catalog**: Real-time product recommendations based on species and tank requirements
 - **Shopping Cart Integration**: Seamless add-to-cart functionality with persistent sessions
 
 ### User Experience
+
 - **Responsive Design**: Mobile-first approach with Tailwind CSS v3.4.17
 - **Accessibility Features**: WCAG 2.1 compliant with screen reader support
 - **Interactive Elements**: Responsive grid layouts for enhanced user engagement
@@ -57,6 +61,7 @@ src/
 ## Species Database
 
 The application includes a comprehensive compatibility matrix covering:
+
 - Malawian Cichlids
 - Tanganyikan Cichlids
 - Various African Cichlids

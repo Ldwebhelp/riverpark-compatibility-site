@@ -80,10 +80,9 @@ export class MetadataEngine {
         name: 'Filter Bioload and Tank Size',
         condition: (product) => product.category === 'Filters',
         action: (product) => {
-          const metadata: Partial<Product['metadata']> = {}
+          const metadata: Partial<Product['metadata']> = {} // Define metadata variable
 
           if (product.name.toLowerCase().includes('canister')) {
-            metadata.bioload = 'high'
             metadata.tank_size_min = 40
             metadata.compatible_with = ['Large Fish', 'Heavy Bioload Species']
           } else if (product.name.toLowerCase().includes('hang on back') || product.name.toLowerCase().includes('hob')) {
@@ -243,10 +242,10 @@ export class MetadataEngine {
         ...(existing.compatible_with || []),
         ...(additional.compatible_with || [])
       ].filter((item, index, array) => array.indexOf(item) === index),
-      temp_range: additional.temp_range || existing.temp_range,
-      ph_range: additional.ph_range || existing.ph_range,
-      hardness_range: additional.hardness_range || existing.hardness_range,
-      tank_size_min: additional.tank_size_min || existing.tank_size_min,
+      temp_range: additional.temp_range || existing.temp_range || '',
+      ph_range: additional.ph_range || existing.ph_range || '',
+      hardness_range: additional.hardness_range || existing.hardness_range || '',
+      tank_size_min: additional.tank_size_min || existing.tank_size_min || 0,
       care_level: additional.care_level || existing.care_level,
       tags: [
         ...(existing.tags || []),
@@ -254,36 +253,36 @@ export class MetadataEngine {
       ].filter((item, index, array) => array.indexOf(item) === index),
       bioload: additional.bioload || existing.bioload,
       aggression: additional.aggression || existing.aggression
-    }
+    };
   }
 
   private isProductCompatible(product: Product, species: Species): boolean {
-    const metadata = product.metadata
+    const metadata = product.metadata;
 
     if (metadata.compatible_with) {
       const isDirectMatch = metadata.compatible_with.some(compatible =>
         compatible.toLowerCase().includes(species.name.toLowerCase()) ||
         species.name.toLowerCase().includes(compatible.toLowerCase())
-      )
-      if (isDirectMatch) return true
+      );
+      if (isDirectMatch) return true;
     }
 
     if (species.detailedInfo) {
-      const speciesInfo = species.detailedInfo
+      const speciesInfo = species.detailedInfo;
 
-      if (metadata.temp_range && speciesInfo.waterParams.temperature) {
-        const productTempRange = this.parseRange(metadata.temp_range)
-        const speciesTempRange = this.parseRange(speciesInfo.waterParams.temperature)
+      if (metadata.temp_range && speciesInfo.waterParams?.temperature) {
+        const productTempRange = this.parseRange(metadata.temp_range);
+        const speciesTempRange = this.parseRange(speciesInfo.waterParams.temperature);
         if (!this.rangesOverlap(productTempRange, speciesTempRange)) {
-          return false
+          return false;
         }
       }
 
-      if (metadata.ph_range && speciesInfo.waterParams.ph) {
-        const productPhRange = this.parseRange(metadata.ph_range)
-        const speciesPhRange = this.parseRange(speciesInfo.waterParams.ph)
+      if (metadata.ph_range && speciesInfo.waterParams?.ph) {
+        const productPhRange = this.parseRange(metadata.ph_range);
+        const speciesPhRange = this.parseRange(speciesInfo.waterParams.ph);
         if (!this.rangesOverlap(productPhRange, speciesPhRange)) {
-          return false
+          return false;
         }
       }
 
@@ -292,22 +291,26 @@ export class MetadataEngine {
           'beginner': ['beginner'],
           'intermediate': ['beginner', 'intermediate'],
           'advanced': ['beginner', 'intermediate', 'advanced']
-        }
+        };
 
         if (!careLevelMatch[metadata.care_level]?.includes(speciesInfo.careLevel.toLowerCase())) {
-          return false
+          return false;
         }
       }
     }
 
-    return true
+    return true;
   }
 
   private parseRange(range: string): [number, number] {
-    const numbers = range.match(/\d+\.?\d*/g)
-    if (!numbers || numbers.length < 2) {
-      const single = parseFloat(numbers?.[0] || '0')
-      return [single, single]
+    const numbers = range.match(/\d+\.?\d*/g);
+    if (!numbers || numbers.length === 0) {
+      console.warn(`Invalid range format: "${range}". Defaulting to [0, 0].`);
+      return [0, 0]; // Default to [0, 0] if the range is invalid
+    }
+    if (numbers.length === 1) {
+      const single = parseFloat(numbers[0]);
+      return [single, single];
     }
     return [parseFloat(numbers[0]), parseFloat(numbers[1])]
   }

@@ -8,7 +8,7 @@ import Link from 'next/link'
 export default function CompatibilityPage() {
   const [selectedSpecies, setSelectedSpecies] = useState<string[]>([])
 
-  const tankScore = selectedSpecies.length > 1 
+  const tankScore = selectedSpecies?.length > 1
     ? CompatibilityEngine.calculateTankScore(selectedSpecies)
     : null
 

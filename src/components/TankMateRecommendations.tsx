@@ -20,34 +20,38 @@ export default function TankMateRecommendations({
   const [activeTab, setActiveTab] = useState<'compatible' | 'caution'>('compatible')
 
   const recommendations = useMemo(() => {
-    if (selectedSpecies.length === 0) return { compatible: [], caution: [] }
+    if (selectedSpecies.length === 0) return { compatible: [], caution: [] };
 
     // Get species that are compatible with ALL selected species
-    const compatibleSpecies = CompatibilityEngine.filterByCompatibility(selectedSpecies, 'Y')
-    const cautionSpecies = CompatibilityEngine.filterByCompatibility(selectedSpecies, 'C')
-      .filter(species => !compatibleSpecies.find(c => c.id === species.id))
+    const compatibleSpecies = CompatibilityEngine.filterByCompatibility(selectedSpecies, 'Y') || [];
+    const cautionSpecies = (CompatibilityEngine.filterByCompatibility(selectedSpecies, 'C') || [])
+      .filter(species => !compatibleSpecies.find(c => c.id === species.id));
 
     return {
       compatible: compatibleSpecies.slice(0, maxRecommendations),
       caution: cautionSpecies.slice(0, maxRecommendations)
-    }
+    };
   }, [selectedSpecies, maxRecommendations])
 
   const getRecommendationScore = (speciesId: string): number => {
-    if (selectedSpecies.length === 0) return 0
-    
-    const ratings: number[] = selectedSpecies.map(selectedId => {
-      const check = CompatibilityEngine.checkPairCompatibility(selectedId, speciesId)
-      switch (check.rating) {
-        case 'Y': return 1
-        case 'C': return 0.5
-        case 'N': return 0
-        default: return 0
-      }
-    })
+    if (selectedSpecies.length === 0) return 0;
 
-    const total = ratings.reduce((sum, rating) => sum + rating, 0)
-    return Math.round((total / ratings.length) * 100)
+    const ratings: number[] = selectedSpecies.map(selectedId => {
+      const check = CompatibilityEngine.checkPairCompatibility(selectedId, speciesId);
+      switch (check?.rating) {
+        case 'Y':
+          return 1;
+        case 'C':
+          return 0.5;
+        case 'N':
+          return 0;
+        default:
+          return 0;
+      }
+    });
+
+    const total = ratings.reduce((sum, rating) => sum + rating, 0);
+    return ratings.length > 0 ? Math.round((total / ratings.length) * 100) : 0; // Avoid division by zero
   }
 
   if (selectedSpecies.length === 0) {
@@ -114,7 +118,7 @@ export default function TankMateRecommendations({
         <h4 className="font-medium text-gray-900 mb-2">Current Selection:</h4>
         <div className="flex flex-wrap gap-2">
           {selectedSpecies.map(speciesId => {
-            const species = getSpeciesById(speciesId)
+            const species = getSpeciesById(speciesId);
             return species ? (
               <span
                 key={speciesId}
@@ -122,7 +126,14 @@ export default function TankMateRecommendations({
               >
                 {species.name}
               </span>
-            ) : null
+            ) : (
+              <span
+                key={speciesId}
+                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800 border border-gray-200"
+              >
+                Unknown Species
+              </span>
+            );
           })}
         </div>
       </div>

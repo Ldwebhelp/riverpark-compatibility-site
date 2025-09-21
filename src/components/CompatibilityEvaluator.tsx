@@ -16,12 +16,19 @@ export default function CompatibilityEvaluator({
   const [showDetails, setShowDetails] = useState(false)
 
   useEffect(() => {
-    const newEvaluation = IntelligenceEngine.evaluateCompatibility(speciesIds)
-    setEvaluation(newEvaluation)
-    onEvaluationChange?.(newEvaluation)
+    if (speciesIds.length === 0) {
+      console.warn('No species provided for compatibility evaluation.');
+      setEvaluation(null);
+      return;
+    }
+
+    const newEvaluation = IntelligenceEngine.evaluateCompatibility(speciesIds);
+    setEvaluation(newEvaluation);
+    onEvaluationChange?.(newEvaluation);
   }, [speciesIds, onEvaluationChange])
 
-  if (!evaluation || speciesIds.length < 2) {
+  if (!evaluation?.status) {
+    console.warn('Evaluation status is missing or invalid.');
     return null
   }
 
@@ -153,11 +160,11 @@ export default function CompatibilityEvaluator({
                 >
                   <div className="flex-1">
                     <span className="font-medium text-gray-900">
-                      {result.displayName1}
+                      {result.displayName1 || 'Unknown'}
                     </span>
                     <span className="mx-2 text-gray-500">+</span>
                     <span className="font-medium text-gray-900">
-                      {result.displayName2}
+                      {result.displayName2 || 'Unknown'}
                     </span>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${getRatingColor(result.rating)}`}>
@@ -184,7 +191,7 @@ export default function CompatibilityEvaluator({
               >
                 <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                 <p className="text-blue-800 text-sm leading-relaxed">
-                  {recommendation}
+                  {recommendation || 'No recommendation available.'}
                 </p>
               </div>
             ))}

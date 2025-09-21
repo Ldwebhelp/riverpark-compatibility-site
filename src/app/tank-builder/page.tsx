@@ -115,7 +115,15 @@ export default function TankBuilderPage() {
             </div>
           </div>
 
-          <TankSetupAnalyser />
+          <TankSetupAnalyser
+            onAnalysisComplete={(result) => {
+              if (!result) {
+                console.warn('Analysis result is null or undefined.');
+                return;
+              }
+              console.log(result);
+            }}
+          />
         </div>
       )}
 
@@ -151,7 +159,15 @@ export default function TankBuilderPage() {
             </div>
           </div>
 
-          <TankSetupAnalyser />
+          <TankSetupAnalyser
+            onAnalysisComplete={(result) => {
+              if (!result) {
+                console.warn('Analysis result is null or undefined.');
+                return;
+              }
+              console.log(result);
+            }}
+          />
         </div>
       )}
 

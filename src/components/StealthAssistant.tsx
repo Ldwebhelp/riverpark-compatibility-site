@@ -66,6 +66,9 @@ export function StealthAssistantProvider({ children }: { children: ReactNode }) 
     setState(prev => {
       const newState = { ...prev, ...updates }
       
+      // Ensure cartItems is always defined
+      newState.cartItems = newState.cartItems || [];
+
       // Auto-update setup progress
       newState.setupProgress = {
         hasSpecies: newState.selectedSpecies.length > 0,

@@ -38,10 +38,13 @@ export default function TankSetupAnalyzer({ onAnalysisComplete }: TankSetupAnaly
   const [analysisResult, setAnalysisResult] = useState<TankAnalysisResult | null>(null)
 
   const analyzeTankSetup = () => {
-    if (currentSpecies.length === 0) return
+    if (currentSpecies.length === 0) {
+      console.warn('No species selected for analysis.')
+      return
+    }
 
     const allSpecies = newSpecies ? [...currentSpecies, newSpecies] : currentSpecies
-    
+
     // Calculate compatibility
     const compatibilityChecks = CompatibilityEngine.checkTankCompatibility(allSpecies)
     const tankScore = CompatibilityEngine.calculateTankScore(allSpecies)
@@ -68,9 +71,9 @@ export default function TankSetupAnalyzer({ onAnalysisComplete }: TankSetupAnaly
     const maxCapacity = Math.floor(tankSize / 3) // 1 inch per gallon rule (conservative)
     
     // Get recommendations for compatible additions
-    const recommendations = newSpecies 
+    const recommendations = newSpecies
       ? []
-      : CompatibilityEngine.filterByCompatibility(currentSpecies, 'Y').slice(0, 5)
+      : CompatibilityEngine.filterByCompatibility(currentSpecies, 'Y')?.slice(0, 5) || []
 
     const result: TankAnalysisResult = {
       canAddSpecies: conflicts.length === 0,
@@ -159,12 +162,11 @@ export default function TankSetupAnalyzer({ onAnalysisComplete }: TankSetupAnaly
                 className="block w-full border border-gray-300 rounded-md py-2 px-3 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500"
               >
                 <option value="">Select a species to add...</option>
-                {CompatibilityEngine.filterByCompatibility(currentSpecies, 'Y,C')
-                  .map(species => (
-                    <option key={species.id} value={species.id}>
-                      {species.name}
-                    </option>
-                  ))}
+                {CompatibilityEngine.filterByCompatibility(currentSpecies, 'Y,C')?.map(species => (
+                  <option key={species.id} value={species.id}>
+                    {species.name}
+                  </option>
+                ))}
               </select>
             </div>
           )}
@@ -258,7 +260,7 @@ export default function TankSetupAnalyzer({ onAnalysisComplete }: TankSetupAnaly
                       </svg>
                       <div>
                         <div className="font-medium text-red-800">
-                          {getSpeciesById(conflict.species1)?.name} + {getSpeciesById(conflict.species2)?.name}
+                          {getSpeciesById(conflict.species1)?.name || 'Unknown'} + {getSpeciesById(conflict.species2)?.name || 'Unknown'}
                         </div>
                         <div className="text-red-700 text-sm mt-1">
                           {conflict.reason}
@@ -286,7 +288,7 @@ export default function TankSetupAnalyzer({ onAnalysisComplete }: TankSetupAnaly
                       </svg>
                       <div>
                         <div className="font-medium text-yellow-800">
-                          {getSpeciesById(caution.species1)?.name} + {getSpeciesById(caution.species2)?.name}
+                          {getSpeciesById(caution.species1)?.name || 'Unknown'} + {getSpeciesById(caution.species2)?.name || 'Unknown'}
                         </div>
                         <div className="text-yellow-700 text-sm mt-1">
                           {caution.reason}

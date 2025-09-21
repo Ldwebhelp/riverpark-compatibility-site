@@ -6,26 +6,27 @@ export class CompatibilityEngine {
    * Check compatibility between two species
    */
   static checkPairCompatibility(species1Id: string, species2Id: string): CompatibilityCheck {
-    const species1 = getSpeciesById(species1Id)
-    const species2 = getSpeciesById(species2Id)
-    
+    const species1 = getSpeciesById(species1Id);
+    const species2 = getSpeciesById(species2Id);
+
     if (!species1 || !species2) {
+      console.warn(`Species not found: ${species1Id} or ${species2Id}`);
       return {
         species1: species1Id,
         species2: species2Id,
         rating: 'N',
         reason: 'Species not found'
-      }
+      };
     }
 
-    const rating = species1.compatibility[species2Id] || 'N'
-    
+    const rating = species1.compatibility?.[species2Id] || 'N';
+
     return {
       species1: species1Id,
       species2: species2Id,
       rating,
       reason: this.getCompatibilityReason(rating, species1, species2)
-    }
+    };
   }
 
   /**
@@ -47,38 +48,47 @@ export class CompatibilityEngine {
    * Get tank mate recommendations for a species
    */
   static getRecommendedTankMates(speciesId: string, maxResults: number = 10): Species[] {
-    const species = getSpeciesById(speciesId)
-    if (!species) return []
+    const species = getSpeciesById(speciesId);
+    if (!species) {
+      console.warn(`Species not found: ${speciesId}`);
+      return [];
+    }
 
     const compatible = speciesData
-      .filter(s => s.id !== speciesId && species.compatibility[s.id] === 'Y')
-      .slice(0, maxResults)
+      .filter(s => s.id !== speciesId && species.compatibility?.[s.id] === 'Y')
+      .slice(0, maxResults);
 
-    return compatible
+    return compatible;
   }
 
   /**
    * Get species that require caution with the given species
    */
   static getCautionaryTankMates(speciesId: string): Species[] {
-    const species = getSpeciesById(speciesId)
-    if (!species) return []
+    const species = getSpeciesById(speciesId);
+    if (!species) {
+      console.warn(`Species not found: ${speciesId}`);
+      return [];
+    }
 
-    return speciesData.filter(s => 
-      s.id !== speciesId && species.compatibility[s.id] === 'C'
-    )
+    return speciesData.filter(s =>
+      s.id !== speciesId && species.compatibility?.[s.id] === 'C'
+    );
   }
 
   /**
    * Get incompatible species
    */
   static getIncompatibleSpecies(speciesId: string): Species[] {
-    const species = getSpeciesById(speciesId)
-    if (!species) return []
+    const species = getSpeciesById(speciesId);
+    if (!species) {
+      console.warn(`Species not found: ${speciesId}`);
+      return [];
+    }
 
-    return speciesData.filter(s => 
-      s.id !== speciesId && species.compatibility[s.id] === 'N'
-    )
+    return speciesData.filter(s =>
+      s.id !== speciesId && species.compatibility?.[s.id] === 'N'
+    );
   }
 
   /**
@@ -173,20 +183,23 @@ export class CompatibilityEngine {
     selectedSpecies: string[],
     compatibilityLevel: 'Y' | 'C' | 'Y,C' = 'Y'
   ): Species[] {
-    if (selectedSpecies.length === 0) return speciesData
+    if (selectedSpecies.length === 0) return speciesData;
 
-    const allowedRatings = compatibilityLevel.split(',') as CompatibilityRating[]
+    const allowedRatings = compatibilityLevel.split(',') as CompatibilityRating[];
 
     return speciesData.filter(species => {
-      if (selectedSpecies.includes(species.id)) return false
+      if (selectedSpecies.includes(species.id)) return false;
 
       return selectedSpecies.every(selectedId => {
-        const selectedSpecies = getSpeciesById(selectedId)
-        if (!selectedSpecies) return false
+        const selectedSpecies = getSpeciesById(selectedId);
+        if (!selectedSpecies) {
+          console.warn(`Species not found: ${selectedId}`);
+          return false;
+        }
 
-        const rating = selectedSpecies.compatibility[species.id]
-        return allowedRatings.includes(rating)
-      })
-    })
+        const rating = selectedSpecies.compatibility?.[species.id];
+        return allowedRatings.includes(rating);
+      });
+    });
   }
 }

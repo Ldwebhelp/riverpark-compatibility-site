@@ -314,16 +314,16 @@ export class ProductRecommendationEngine {
     species: string[]
   ): boolean {
     // Check tank size compatibility
-    if (!product.compatibility.tankSizes.includes(tankSize)) {
-      return false
+    if (!product.compatibility?.tankSizes?.includes(tankSize)) {
+      return false;
     }
 
     // Check species compatibility
     const hasCompatibleSpecies = species.some(speciesId =>
-      product.compatibility.species.includes(speciesId)
-    )
+      product.compatibility?.species?.includes(speciesId)
+    );
 
-    return hasCompatibleSpecies
+    return hasCompatibleSpecies;
   }
 
   /**
@@ -334,10 +334,12 @@ export class ProductRecommendationEngine {
     species: string[]
   ): number {
     const compatibleSpecies = species.filter(s =>
-      product.compatibility.species.includes(s)
-    )
+      product.compatibility?.species?.includes(s)
+    );
 
-    return Math.round((compatibleSpecies.length / species.length) * 100)
+    return species.length > 0
+      ? Math.round((compatibleSpecies.length / species.length) * 100)
+      : 0; // Avoid division by zero
   }
 
   /**
@@ -415,12 +417,12 @@ export class ProductRecommendationEngine {
       'substrate': 'substrate',
       'decoration': 'decorations',
       'food': 'food'
-    }
+    };
 
-    const key = Object.keys(mapping).find(k => 
+    const key = Object.keys(mapping).find(k =>
       equipmentName.toLowerCase().includes(k)
-    )
-    
-    return key ? mapping[key] : 'accessories'
+    );
+
+    return key ? mapping[key] : 'accessories';
   }
 }

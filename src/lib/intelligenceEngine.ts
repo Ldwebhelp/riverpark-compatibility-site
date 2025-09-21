@@ -92,31 +92,41 @@ export class IntelligenceEngine {
 
     for (let i = 0; i < speciesIds.length; i++) {
       for (let j = i + 1; j < speciesIds.length; j++) {
-        const species1 = getSpeciesById(speciesIds[i])
-        const species2 = getSpeciesById(speciesIds[j])
-        
+        const species1 = getSpeciesById(speciesIds[i]);
+        const species2 = getSpeciesById(speciesIds[j]);
+
         if (species1 && species2) {
-          const check = CompatibilityEngine.checkPairCompatibility(speciesIds[i], speciesIds[j])
-          
+          const check = CompatibilityEngine.checkPairCompatibility(speciesIds[i], speciesIds[j]);
+
           pairwiseResults.push({
             species1: speciesIds[i],
             species2: speciesIds[j],
             rating: check.rating,
             displayName1: species1.name,
             displayName2: species2.name
-          })
+          });
 
           switch (check.rating) {
-            case 'Y': compatibleCount++; break
-            case 'C': cautionCount++; break
-            case 'N': incompatibleCount++; break
+            case 'Y':
+              compatibleCount++;
+              break;
+            case 'C':
+              cautionCount++;
+              break;
+            case 'N':
+              incompatibleCount++;
+              break;
           }
+        } else {
+          console.warn(`Species not found: ${speciesIds[i]} or ${speciesIds[j]}`);
         }
       }
     }
 
     const totalPairs = pairwiseResults.length
-    const score = Math.round(((compatibleCount + cautionCount * 0.5) / totalPairs) * 100)
+    const score = totalPairs > 0 
+      ? Math.round(((compatibleCount + cautionCount * 0.5) / totalPairs) * 100)
+      : 100
 
     // Determine overall status
     let status: '✅ Fully compatible' | '⚠️ Caution' | '❌ Incompatible'
@@ -198,11 +208,11 @@ export class IntelligenceEngine {
 
     // Temperature requirements
     const tempRanges = species.map(s => {
-      if (s.detailedInfo?.waterParams.temperature) {
-        const temp = s.detailedInfo.waterParams.temperature
-        const numbers = temp.match(/\d+/g)
+      if (s.detailedInfo?.waterParams?.temperature) {
+        const temp = s.detailedInfo.waterParams.temperature;
+        const numbers = temp.match(/\d+/g);
         if (numbers && numbers.length >= 2) {
-          return { min: parseInt(numbers[0]), max: parseInt(numbers[1]) }
+          return { min: parseInt(numbers[0]), max: parseInt(numbers[1]) };
         }
       }
       return { min: 72, max: 78 } // Default tropical range
@@ -213,11 +223,11 @@ export class IntelligenceEngine {
 
     // pH requirements
     const phRanges = species.map(s => {
-      if (s.detailedInfo?.waterParams.ph) {
-        const ph = s.detailedInfo.waterParams.ph
-        const numbers = ph.match(/[\d.]+/g)
+      if (s.detailedInfo?.waterParams?.ph) {
+        const ph = s.detailedInfo.waterParams.ph;
+        const numbers = ph.match(/[\d.]+/g);
         if (numbers && numbers.length >= 2) {
-          return { min: parseFloat(numbers[0]), max: parseFloat(numbers[1]) }
+          return { min: parseFloat(numbers[0]), max: parseFloat(numbers[1]) };
         }
       }
       return { min: 6.5, max: 7.5 } // Default range
@@ -345,8 +355,8 @@ export class IntelligenceEngine {
     const missing = []
 
     for (const reqCategory of requirements.requiredCategories) {
-      const hasCategory = currentEquipment.some(item => 
-        item.toLowerCase().includes(reqCategory.category)
+      const hasCategory = currentEquipment.some(item =>
+        item.toLowerCase().includes(reqCategory.category.toLowerCase())
       )
 
       if (!hasCategory) {
@@ -418,7 +428,7 @@ export class IntelligenceEngine {
     items: Product[]
     totalCost: number
   } {
-    const species = speciesIds.map(id => getSpeciesById(id)).filter(Boolean) as Species[]
+    const species = speciesIds.map(id => getSpeciesById(id)). filter(Boolean) as Species[]
     
     if (species.length === 0) {
       return {
@@ -437,9 +447,9 @@ export class IntelligenceEngine {
     const essentialCategories = ['food', 'water-care', 'test-kits']
     
     essentialCategories.forEach(category => {
-      const product = availableProducts.find(p => 
+      const product = availableProducts.find(p =>
         p.category === category &&
-        p.compatibility.species.includes(primarySpecies.id)
+        p.compatibility?.species?.includes(primarySpecies.id)
       )
       if (product) kitItems.push(product)
     })
@@ -459,7 +469,7 @@ export class IntelligenceEngine {
    */
   private static generateCompatibilityRecommendations(
     speciesIds: string[],
-    summary: { compatible: number, caution: number, incompatible: number, totalPairs: number }
+    summary: { compatible: number; caution: number; incompatible: number; totalPairs: number }
   ): string[] {
     const recommendations = []
 
